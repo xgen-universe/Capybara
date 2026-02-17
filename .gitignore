@@ -1,0 +1,141 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+conda/
+.conda/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.cursor/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Model weights and checkpoints
+*.safetensors
+*.ckpt
+*.pth
+*.bin
+*.pt
+*.pkl
+*.pickle
+checkpoints/
+ckpts/
+pretrained/
+pretrained_models/
+model_weights/
+weights/
+
+# Output and results
+output/
+outputs/
+results/
+logs/
+runs/
+wandb/
+tensorboard/
+*.log
+
+# Large image datasets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.webp
+!assets/*.png
+!assets/*.jpg
+!assets/*.jpeg
+!assets/*/*.png
+!assets/*/*.jpg
+!assets/*/*.jpeg
+
+# Accelerate and distributed training
+accelerate_*.yaml
+deepspeed_config.json
+!acc_config/*.yaml
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.key
+*.secret
+
+# System files
+Thumbs.db
+desktop.ini
+
+# Compressed files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Video generation specific
+*.gif
+generated/
+samples/
+inference_output/
+edit_output/
+
+# CSV data (allow examples)
+*.csv
+!assets/test_data/*.csv
+!example*.csv
+!sample*.csv
+
+# HuggingFace cache
+.cache/
+huggingface/
+
+# Misc
+*.bak
+*.swp
+*~
+.pytest_cache/
+.coverage
+htmlcov/
+flash-attention/
