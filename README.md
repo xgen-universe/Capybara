@@ -30,7 +30,7 @@ The framework leverages advanced diffusion models and transformer architectures 
 
 **Key Features:**
 
-* 🎬 **Multi-Task Support**: Supports Text-to-Video (T2V), Text-to-Image (T2I), Instruction-baed Video-to-Video (TV2V), Instruction-baed Image-to-Image (TI2I), and various editing tasks
+* 🎬 **Multi-Task Support**: Supports Text-to-Video (T2V), Text-to-Image (T2I), Instruction-based Video-to-Video (TV2V), Instruction-based Image-to-Image (TI2I), and various editing tasks
 * 🚀 **High Performance**: Built with distributed inference support for efficient multi-GPU processing
 
 ## 🔥 News
