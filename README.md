@@ -13,9 +13,9 @@
   
 </div>
 
-**Capybara** is the first unified visual creation framework that supports both generation and editing within a single model, enabling high-quality image and video synthesis under a shared multi-modality in-context interface. 
+**Capybara** is a unified visual creation model, i.e., a powerful visual generation and editing framework designed for high-quality visual synthesis and manipulation tasks.
 
-Built on diffusion models and transformer-based architectures, it handles text-to-image/video generation, in-context generation, instruction-based editing, and in-context editing, providing precise control over content, appearance, and spatiotemporal dynamics.
+The framework leverages advanced diffusion models and transformer architectures to support versatile visual generation and editing capabilities with precise control over content, motion, and camera movements.
 
 <!-- <table>
   <tr>
