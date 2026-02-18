@@ -38,6 +38,7 @@ The framework leverages advanced diffusion models and transformer architectures 
 * **[2026.02.17]** 🚀 Initial release v0.1 of the Capybara inference framework supportting generation and instruction-based editing tasks (T2I, T2V, TI2I, TV2V).
 
 ## 📝 TODO List
+- [ ] Add support for ComfyUI.
 - [ ] Release our unified creation model.
 - [ ] Release training code.
 
