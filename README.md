@@ -41,6 +41,27 @@ The framework leverages advanced diffusion models and transformer architectures 
 - [ ] Release our unified creation model.
 - [ ] Release training code.
 
+<!-- ## 🏞️ Show Caeses
+**Results of generation tasks.** We show two generation tasks under our unified model. The top section presents text-to-image results, illustrating high-fidelity synthesis across diverse styles. The bottom rows show text-to-video results, demonstrating temporally coherent generation with natural motion for both realistic and stylized content.
+<p align="center">
+<img src="./assets/misc/gen_teaser.png" style="width: 100%; height: auto;"/>
+</p>
+
+**Results of image editing tasks.** We show the results of both instruction-based image editing and in-context image editing. The examples cover local and global edits (e.g., time-of-day and style changes), background replacement, and expression control. We further demonstrate multi-turn editing, where edits are applied sequentially. We also show in-context editing guided by a refenece image.
+<p align="center">
+<img src="./assets/misc/imageedit_teaser.png" style="width: 100%; height: auto;"/>
+</p>
+
+**Results of instruction-based video editing task.** We showcase instruction-based editing (TV2V) under our unified creation interface, covering local edits, global edits, dense prediction, and dynamic edits. Each example presents input frames and the edited outputs, highlighting temporally coherent transformations that preserve identity and overall structure.
+<p align="center">
+<img src="./assets/misc/videoedit_teaser5.png" style="width: 100%; height: auto;"/>
+</p>
+
+**Results of in-context visual creation.** We show in-context generation and in-context editing results , including subject-conditioned generation (S2V/S2I), conditional generation(C2V), image-to-video(I2V), reference-driven editing (II2I/IV2V).
+<p align="center">
+<img src="./assets/misc/incontext_teaser2.png" style="width: 100%; height: auto;"/>
+</p> -->
+
 ## 🛠️ Installation
 
 We recommend using Anaconda to create an isolated Python environment and recommend using CUDA 12.6:
