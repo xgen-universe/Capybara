@@ -99,11 +99,13 @@ def attention(
         out = x.reshape(b, s, -1)
         return out
     else:
-        # flash mode (default)
         qkv = torch.stack([q, k, v], dim=2)
         if attn_mask is not None and attn_mask.dtype != torch.bool:
             attn_mask = attn_mask.bool()
-        x = flash_attn_no_pad(qkv, attn_mask, causal=causal, dropout_p=drop_rate, softmax_scale=None)
+        if attn_mode == "flash3":
+            x = flash_attn_no_pad_v3(qkv, attn_mask, causal=causal, dropout_p=drop_rate, softmax_scale=None)
+        else:
+            x = flash_attn_no_pad(qkv, attn_mask, causal=causal, dropout_p=drop_rate, softmax_scale=None)
         b, s, a, d = x.shape
         out = x.reshape(b, s, -1)
         return out

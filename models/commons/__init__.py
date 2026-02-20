@@ -218,6 +218,18 @@ def maybe_fallback_attn_mode(attn_mode, infer_state=None, block_idx=None):
             raise ValueError(f"{attn_mode} is not available for your GPU or flex-block-attn is not properly installed.")
     return attn_mode
 
+def _has_quantized_params(model):
+    """Check if a model contains torchao quantized parameters that cannot be moved with .to()."""
+    try:
+        from torchao.dtypes import AffineQuantizedTensor
+    except ImportError:
+        return False
+    for param in model.parameters():
+        if isinstance(param, AffineQuantizedTensor) or isinstance(param.data, AffineQuantizedTensor):
+            return True
+    return False
+
+
 @contextmanager
 def auto_offload_model(models, device, enabled=True):
     from diffusers.hooks.group_offloading import _is_group_offload_enabled
@@ -226,11 +238,15 @@ def auto_offload_model(models, device, enabled=True):
             models = [models]
         for model in models:
             if model is not None:
+                if _has_quantized_params(model):
+                    continue
                 model.to(device)
     yield
     if enabled:
         for model in models:
             if model is not None:
+                if _has_quantized_params(model):
+                    continue
                 model.to(torch.device('cpu'))
 
 def get_gpu_memory(device=None):
@@ -246,3 +262,25 @@ def get_gpu_memory(device=None):
 
 def get_rank():
     return int(os.environ.get('RANK', '0'))
+
+
+def quantize_model_fp8(model, mode="fp8"):
+    """Apply FP8 weight-only quantization via torchao.
+
+    Requires compute capability >= 8.9 (Ada Lovelace / Hopper).
+    """
+    if mode != "fp8":
+        return model
+
+    cc = torch.cuda.get_device_capability()
+    if cc[0] < 8 or (cc[0] == 8 and cc[1] < 9):
+        raise RuntimeError(
+            f"FP8 quantization requires compute capability >= 8.9 (Ada/Hopper). "
+            f"Current GPU has {cc[0]}.{cc[1]}."
+        )
+
+    from torchao.quantization import quantize_, float8_weight_only
+
+    quantize_(model, float8_weight_only())
+    print(f"[Capybara] Transformer quantized to FP8 (weight-only, E4M3).")
+    return model

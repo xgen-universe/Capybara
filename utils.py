@@ -581,7 +581,7 @@ def load_rewrite_model(model_path, device=None):
     model = Qwen3VLForConditionalGeneration.from_pretrained(
         model_path,
         torch_dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
+        attn_implementation="flash_attention_3",
         device_map="cpu",
     ).to(device)
     processor = AutoProcessor.from_pretrained(model_path)

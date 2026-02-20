@@ -35,7 +35,7 @@ The framework leverages advanced diffusion models and transformer architectures 
 
 ## 🔥 News
 
-* **[2026.02.20]** 🎨 Added [ComfyUI support](#-comfyui-support) with custom nodes for all task types (T2I, T2V, TI2I, TV2V).
+* **[2026.02.20]** 🎨 Added [ComfyUI support](#-comfyui-support) with custom nodes for all task types (T2I, T2V, TI2I, TV2V), together with [FP8 quantization](#-fp8-quantization) support for the inference script and ComfyUI custom node.
 * **[2026.02.17]** 🚀 Initial release v0.1 of the Capybara inference framework supporting generation and instruction-based editing tasks (T2I, T2V, TI2I, TV2V).
 
 ## 📝 TODO List
@@ -292,6 +292,7 @@ A sample workflow is provided in [`comfyui/examples/`](comfyui/examples/). For s
 | `--rewrite_instruction`    | `False`     | Auto-enhance prompts using Qwen3-VL-8B-Instruct           |
 | `--rewrite_model_path`     | `Qwen/Qwen3-VL-8B-Instruct` | Path to the rewrite model              |
 | `--max_samples`            | `None`      | Limit the number of samples to process from CSV            |
+| `--quantize`               | `None`      | Quantize transformer weights (`fp8`). See [FP8 Quantization](#-fp8-quantization). |
 
 ### Recommended Settings
 
@@ -305,6 +306,41 @@ For optimal quality and performance, we recommend the following settings:
 **Notes:**
 - **Resolution**: You can experiment with higher resolutions (`1024` or `1080p`).
 - **Inference Steps**: 50 steps provide a good balance between quality and speed. You can use 30-40 steps for faster generation.
+
+## ⚡ FP8 Quantization
+
+Capybara supports FP8 (E4M3) weight-only quantization for the transformer via [torchao](https://github.com/pytorch/ao). This roughly halves the transformer's weight memory, allowing larger resolutions or longer videos to fit in GPU VRAM.
+
+**Requirements:**
+- NVIDIA GPU with compute capability >= 8.9 (Ada Lovelace or Hopper, e.g. RTX 4090, L40, H100)
+- `torchao` installed (`pip install torchao`)
+
+### Inference Script
+
+Add `--quantize fp8` to any `inference.py` command:
+
+```bash
+python inference.py \
+    --pretrained_model_name_or_path ./ckpts \
+    --media_path ./assets/examples/video1.mp4 \
+    --prompt "Replace the monkey with Ultraman." \
+    --output_path ./results/test_fp8 \
+    --num_inference_steps 50 \
+    --num_frames 81 \
+    --task_type tv2v \
+    --resolution 480p \
+    --quantize fp8
+```
+
+### ComfyUI
+
+In the **Capybara Load Pipeline** node, set the `quantize` dropdown to **fp8**. The node handles everything automatically -- the transformer will be loaded in FP8 on GPU while other components (VAE, text encoders, etc.) still offload to CPU as usual.
+
+### How It Works
+
+- **Weights** are stored in FP8 format (roughly half the memory of bf16/fp16).
+- **Activations and compute** remain in the dtype you select (bf16 or fp16). Only the weights are quantized; they are dequantized on the fly during matrix multiplications.
+- When FP8 is enabled with CPU offloading, the transformer stays pinned on GPU (quantized tensors cannot be moved between devices). All other models still offload normally.
 
 ## 📄 License
 

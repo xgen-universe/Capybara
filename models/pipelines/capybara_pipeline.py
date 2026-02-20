@@ -49,6 +49,7 @@ from models.commons import (
     get_rank,
     is_flash3_available,
     is_sparse_attn_supported,
+    quantize_model_fp8,
 )
 from models.commons.parallel_states import get_parallel_state
 
@@ -1536,17 +1537,19 @@ class Capybara_Pipeline(DiffusionPipeline):
         return self.transformer.config.use_meanflow
 
     @classmethod
-    def load_sr_transformer_upsampler(cls, cached_folder, sr_version, transformer_dtype=torch.bfloat16, device=None):
+    def load_sr_transformer_upsampler(cls, cached_folder, sr_version, transformer_dtype=torch.bfloat16, device=None, quantize_transformer=None):
         transformer = HunyuanVideo_1_5_DiffusionTransformer.from_pretrained(os.path.join(cached_folder, "transformer", sr_version), torch_dtype=transformer_dtype).to(device)
+        if quantize_transformer:
+            quantize_model_fp8(transformer, quantize_transformer)
         upsampler_cls = SRTo720pUpsampler if "720p" in sr_version else SRTo1080pUpsampler
         upsampler = upsampler_cls.from_pretrained(os.path.join(cached_folder, "upsampler", sr_version)).to(device)
         return transformer, upsampler
 
-    def create_sr_pipeline(self, cached_folder, sr_version, transformer_dtype=torch.bfloat16, device=None):
+    def create_sr_pipeline(self, cached_folder, sr_version, transformer_dtype=torch.bfloat16, device=None, quantize_transformer=None):
         pass
 
     @classmethod
-    def create_pipeline(cls, pretrained_model_name_or_path, transformer_version, create_sr_pipeline=False, force_sparse_attn=False, transformer_dtype=torch.bfloat16, enable_offloading=None, enable_group_offloading=None, overlap_group_offloading=True, device=None, **kwargs):
+    def create_pipeline(cls, pretrained_model_name_or_path, transformer_version, create_sr_pipeline=False, force_sparse_attn=False, transformer_dtype=torch.bfloat16, enable_offloading=None, enable_group_offloading=None, overlap_group_offloading=True, device=None, quantize_transformer=None, **kwargs):
         # use snapshot download here to get it working from from_pretrained
 
         if not os.path.isdir(pretrained_model_name_or_path):
@@ -1582,6 +1585,13 @@ class Capybara_Pipeline(DiffusionPipeline):
         else:
             transformer_init_device = device
 
+        # When fp8 quantization is requested, the transformer must live on GPU
+        # because (a) torchao needs CUDA for the capability check and quantization
+        # kernels, and (b) AffineQuantizedTensor cannot be moved with .to() after
+        # quantization.  We load directly to cuda and skip offloading for it later.
+        if quantize_transformer:
+            transformer_init_device = torch.device('cuda')
+
         supported_transformer_version = os.listdir(os.path.join(cached_folder, "transformer"))
         if transformer_version not in supported_transformer_version:
             raise ValueError(f"Could not find {transformer_version} in {cached_folder}. Only {supported_transformer_version} are available.")
@@ -1591,6 +1601,10 @@ class Capybara_Pipeline(DiffusionPipeline):
             os.path.join(cached_folder, "transformer", transformer_version), torch_dtype=transformer_dtype, 
             low_cpu_mem_usage=True,
         ).to(transformer_init_device)
+
+        if quantize_transformer:
+            quantize_model_fp8(transformer, quantize_transformer)
+
         vae = hunyuanvideo_15_vae.AutoencoderKLConv3D.from_pretrained(
             os.path.join(cached_folder, "vae"), 
             torch_dtype=vae_inference_config['dtype']
@@ -1645,7 +1659,7 @@ class Capybara_Pipeline(DiffusionPipeline):
 
         if create_sr_pipeline:
             sr_version = TRANSFORMER_VERSION_TO_SR_VERSION[transformer_version]
-            sr_pipeline = pipeline.create_sr_pipeline(cached_folder, sr_version, transformer_dtype=transformer_dtype, device=device)
+            sr_pipeline = pipeline.create_sr_pipeline(cached_folder, sr_version, transformer_dtype=transformer_dtype, device=device, quantize_transformer=quantize_transformer)
             pipeline.sr_pipeline = sr_pipeline
             if enable_group_offloading:
                 sr_pipeline.transformer.enable_group_offload(**group_offloading_kwargs)

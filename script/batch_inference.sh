@@ -3,6 +3,8 @@ num_processes=4
 task="tv2v"
 resolution="480p"  # "480p", "720p", "1024", "1080p"
 frames=81          # 81, 101, 121
+# quantize=""      # Uncomment for FP8 weight quantization (requires Ada/Hopper GPU):
+# quantize="--quantize fp8"
 
 # Paths (modify these to your own paths)
 pretrained_model_path="./ckpts"
@@ -22,7 +24,8 @@ python inference.py \
     --num_frames $frames \
     --task_type $task \
     --resolution $resolution \
-    --rewrite_instruction
+    --rewrite_instruction \
+    ${quantize:-}
 
 # For multi-GPU (distributed), use:
 # accelerate launch --config_file acc_config/accelerate_config.yaml --num_processes $num_processes inference.py \

@@ -1,8 +1,8 @@
 {
   "id": "e4d665f6-d525-4116-856b-ef7774784841",
   "revision": 0,
-  "last_node_id": 22,
-  "last_link_id": 21,
+  "last_node_id": 24,
+  "last_link_id": 25,
   "nodes": [
     {
       "id": 21,
@@ -85,6 +85,38 @@
       ]
     },
     {
+      "id": 16,
+      "type": "LoadVideo",
+      "pos": [
+        299.32992774693764,
+        974.0512705669659
+      ],
+      "size": [
+        282.798828125,
+        234.0748083726415
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "widgets_values": [
+        "t2v_1770364217.mp4",
+        "image"
+      ]
+    },
+    {
       "id": 17,
       "type": "GetVideoComponents",
       "pos": [
@@ -110,7 +142,8 @@
           "name": "images",
           "type": "IMAGE",
           "links": [
-            18
+            18,
+            24
           ]
         },
         {
@@ -128,54 +161,6 @@
         "Node name for S&R": "GetVideoComponents"
       },
       "widgets_values": []
-    },
-    {
-      "id": 7,
-      "type": "CapybaraRewriteInstruction",
-      "pos": [
-        507.88176797722497,
-        687.6229523252713
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "rewrite_model",
-          "type": "CAPYBARA_REWRITE_MODEL",
-          "link": 7
-        },
-        {
-          "name": "reference",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "reference_image",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "prompt",
-          "type": "STRING",
-          "links": []
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CapybaraRewriteInstruction"
-      },
-      "widgets_values": [
-        "Add a hat to the girl",
-        ""
-      ]
     },
     {
       "id": 22,
@@ -202,6 +187,14 @@
           "shape": 7,
           "type": "IMAGE",
           "link": 18
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 25
         }
       ],
       "outputs": [
@@ -231,42 +224,54 @@
         49,
         50,
         1,
-        383052422,
+        883210339,
         "randomize",
         "",
         ""
       ]
     },
     {
-      "id": 16,
-      "type": "LoadVideo",
+      "id": 24,
+      "type": "CapybaraRewriteInstruction",
       "pos": [
-        291.44516212193747,
-        988.2094736919657
+        510.053009036716,
+        697.0568791392449
       ],
       "size": [
-        282.798828125,
-        234.0748083726415
+        400,
+        200
       ],
       "flags": {},
-      "order": 0,
+      "order": 4,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "rewrite_model",
+          "type": "CAPYBARA_REWRITE_MODEL",
+          "link": 23
+        },
+        {
+          "name": "reference",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 24
+        }
+      ],
       "outputs": [
         {
-          "name": "VIDEO",
-          "type": "VIDEO",
+          "name": "prompt",
+          "type": "STRING",
           "links": [
-            11
+            25
           ]
         }
       ],
       "properties": {
-        "Node name for S&R": "LoadVideo"
+        "Node name for S&R": "CapybaraRewriteInstruction"
       },
       "widgets_values": [
-        "t2v_1770364217.mp4",
-        "image"
+        "Make the background green",
+        ""
       ]
     },
     {
@@ -301,7 +306,8 @@
         "capybara_v01",
         "bfloat16",
         true,
-        5
+        5,
+        "fp8"
       ]
     },
     {
@@ -324,7 +330,7 @@
           "name": "rewrite_model",
           "type": "CAPYBARA_REWRITE_MODEL",
           "links": [
-            7
+            23
           ]
         }
       ],
@@ -338,14 +344,6 @@
     }
   ],
   "links": [
-    [
-      7,
-      8,
-      0,
-      7,
-      0,
-      "CAPYBARA_REWRITE_MODEL"
-    ],
     [
       11,
       16,
@@ -393,6 +391,30 @@
       19,
       2,
       "FLOAT"
+    ],
+    [
+      23,
+      8,
+      0,
+      24,
+      0,
+      "CAPYBARA_REWRITE_MODEL"
+    ],
+    [
+      24,
+      17,
+      0,
+      24,
+      1,
+      "IMAGE"
+    ],
+    [
+      25,
+      24,
+      0,
+      22,
+      2,
+      "STRING"
     ]
   ],
   "groups": [],
@@ -400,10 +422,10 @@
   "extra": {
     "workflowRendererVersion": "LG",
     "ds": {
-      "scale": 0.8264462809917356,
+      "scale": 0.8966075965274793,
       "offset": [
-        552.8842763216742,
-        -40.74407741345527
+        -9.168503171324362,
+        -30.02506801423756
       ]
     },
     "frontendVersion": "1.39.14"

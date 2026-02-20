@@ -7,7 +7,7 @@ import pandas as pd
 import argparse
 from tqdm import tqdm
 from diffusers.utils import export_to_video, load_image
-from moviepy import VideoFileClip, concatenate_videoclips, clips_array
+# from moviepy import VideoFileClip, concatenate_videoclips, clips_array
 from accelerate import Accelerator
 import imageio
 import einops
@@ -182,6 +182,15 @@ def parse_args():
         type=str,
         default="Qwen/Qwen3-VL-8B-Instruct",
         help="Path or HuggingFace model name for Qwen3-VL-8B-Instruct (default: Qwen/Qwen3-VL-8B-Instruct)"
+    )
+    
+    # Quantization
+    parser.add_argument(
+        "--quantize",
+        type=str,
+        default=None,
+        choices=["fp8"],
+        help="Quantize transformer weights (fp8 = FP8 weight-only via torchao). Requires Ada/Hopper GPU."
     )
     
     return parser.parse_args()
@@ -464,6 +473,7 @@ def main():
         transformer_dtype=torch.bfloat16,
         flow_shift=5.0,
         device=accelerator.device,
+        quantize_transformer=args.quantize,
     )
 
     accelerator.wait_for_everyone()

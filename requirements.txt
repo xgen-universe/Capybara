@@ -15,4 +15,5 @@ Pillow
 PyYAML
 safetensors
 tqdm
+torchao
 webcolors

@@ -164,6 +164,10 @@ class CapybaraLoadPipeline:
                     "step": 0.1,
                     "tooltip": "Flow shift parameter for the scheduler",
                 }),
+                "quantize": (["none", "fp8"], {
+                    "default": "none",
+                    "tooltip": "FP8 weight-only quantization for the transformer",
+                }),
             }
         }
 
@@ -173,9 +177,10 @@ class CapybaraLoadPipeline:
     CATEGORY = "Capybara"
     DESCRIPTION = "Load the Capybara unified visual pipeline with all sub-models."
 
-    def load_pipeline(self, model_path, transformer_version, dtype, enable_offloading, flow_shift):
+    def load_pipeline(self, model_path, transformer_version, dtype, enable_offloading, flow_shift, quantize="none"):
         dtype_map = {"bfloat16": torch.bfloat16, "float16": torch.float16}
         transformer_dtype = dtype_map[dtype]
+        quantize_transformer = None if quantize == "none" else quantize
 
         pipe = Capybara_Pipeline.create_pipeline(
             pretrained_model_name_or_path=model_path,
@@ -187,6 +192,7 @@ class CapybaraLoadPipeline:
             transformer_dtype=transformer_dtype,
             flow_shift=flow_shift,
             device=torch.device("cuda"),
+            quantize_transformer=quantize_transformer,
         )
 
         resolved_mode = self._resolve_attn_mode()
