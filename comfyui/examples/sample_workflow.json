@@ -1,0 +1,412 @@
+{
+  "id": "e4d665f6-d525-4116-856b-ef7774784841",
+  "revision": 0,
+  "last_node_id": 22,
+  "last_link_id": 21,
+  "nodes": [
+    {
+      "id": 21,
+      "type": "SaveVideo",
+      "pos": [
+        1824.4591621219374,
+        461.20947369196574
+      ],
+      "size": [
+        270,
+        250.83018867924528
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 16
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "video/ComfyUI",
+        "auto",
+        "auto"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "CreateVideo",
+      "pos": [
+        1485.4591621219374,
+        446.20947369196574
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": 21
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        30
+      ]
+    },
+    {
+      "id": 17,
+      "type": "GetVideoComponents",
+      "pos": [
+        699.7691621219376,
+        980.8504736919658
+      ],
+      "size": [
+        193.530859375,
+        66
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": null
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetVideoComponents"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 7,
+      "type": "CapybaraRewriteInstruction",
+      "pos": [
+        507.88176797722497,
+        687.6229523252713
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rewrite_model",
+          "type": "CAPYBARA_REWRITE_MODEL",
+          "link": 7
+        },
+        {
+          "name": "reference",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "reference_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CapybaraRewriteInstruction"
+      },
+      "widgets_values": [
+        "Add a hat to the girl",
+        ""
+      ]
+    },
+    {
+      "id": 22,
+      "type": "CapybaraGenerate",
+      "pos": [
+        1014.6911621219372,
+        426.7224736919659
+      ],
+      "size": [
+        400,
+        378
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "CAPYBARA_PIPE",
+          "link": 19
+        },
+        {
+          "name": "reference",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CapybaraGenerate"
+      },
+      "widgets_values": [
+        "Make the background green",
+        "tv2v",
+        "480p",
+        "16:9",
+        49,
+        50,
+        1,
+        383052422,
+        "randomize",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 16,
+      "type": "LoadVideo",
+      "pos": [
+        291.44516212193747,
+        988.2094736919657
+      ],
+      "size": [
+        282.798828125,
+        234.0748083726415
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "widgets_values": [
+        "t2v_1770364217.mp4",
+        "image"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "CapybaraLoadPipeline",
+      "pos": [
+        638,
+        419
+      ],
+      "size": [
+        273.693359375,
+        192
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "CAPYBARA_PIPE",
+          "links": [
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CapybaraLoadPipeline"
+      },
+      "widgets_values": [
+        "xgen-universe/Capybara",
+        "capybara_v01",
+        "bfloat16",
+        true,
+        5
+      ]
+    },
+    {
+      "id": 8,
+      "type": "CapybaraLoadRewriteModel",
+      "pos": [
+        128.61002417557177,
+        699.242646540147
+      ],
+      "size": [
+        299.358984375,
+        82
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "rewrite_model",
+          "type": "CAPYBARA_REWRITE_MODEL",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CapybaraLoadRewriteModel"
+      },
+      "widgets_values": [
+        "Qwen/Qwen3-VL-8B-Instruct",
+        "auto"
+      ]
+    }
+  ],
+  "links": [
+    [
+      7,
+      8,
+      0,
+      7,
+      0,
+      "CAPYBARA_REWRITE_MODEL"
+    ],
+    [
+      11,
+      16,
+      0,
+      17,
+      0,
+      "VIDEO"
+    ],
+    [
+      16,
+      19,
+      0,
+      21,
+      0,
+      "VIDEO"
+    ],
+    [
+      18,
+      17,
+      0,
+      22,
+      1,
+      "IMAGE"
+    ],
+    [
+      19,
+      1,
+      0,
+      22,
+      0,
+      "CAPYBARA_PIPE"
+    ],
+    [
+      20,
+      22,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      22,
+      1,
+      19,
+      2,
+      "FLOAT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "workflowRendererVersion": "LG",
+    "ds": {
+      "scale": 0.8264462809917356,
+      "offset": [
+        552.8842763216742,
+        -40.74407741345527
+      ]
+    },
+    "frontendVersion": "1.39.14"
+  },
+  "version": 0.4
+}

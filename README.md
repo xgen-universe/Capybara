@@ -35,10 +35,11 @@ The framework leverages advanced diffusion models and transformer architectures 
 
 ## 🔥 News
 
+* **[2026.02.20]** 🎨 Added [ComfyUI support](#-comfyui-support) with custom nodes for all task types (T2I, T2V, TI2I, TV2V).
 * **[2026.02.17]** 🚀 Initial release v0.1 of the Capybara inference framework supportting generation and instruction-based editing tasks (T2I, T2V, TI2I, TV2V).
 
 ## 📝 TODO List
-- [ ] Add support for ComfyUI.
+- [x] Add support for ComfyUI.
 - [ ] Release our unified creation model.
 - [ ] Release training code.
 
@@ -246,6 +247,24 @@ accelerate launch --config_file acc_config/accelerate_config.yaml --num_processe
     --resolution 720p \
     --rewrite_instruction
 ```
+
+## 🎨 ComfyUI Support
+
+Capybara provides custom ComfyUI nodes for all task types (T2V, T2I, TI2I, TV2V).
+
+```bash
+ln -s /path/to/Capybara /path/to/ComfyUI/custom_nodes/Capybara
+```
+
+| Node | Description |
+| --- | --- |
+| **Capybara Load Pipeline** | Load all model components with automatic attention backend selection |
+| **Capybara Generate** | Main generation / editing node for all task types |
+| **Capybara Load Video** | Load a video file as IMAGE frames + fps |
+| **Capybara Load Rewrite Model** | Load Qwen3-VL for prompt rewriting |
+| **Capybara Rewrite Instruction** | Expand short prompts into detailed instructions |
+
+A sample workflow is provided in [`comfyui/examples/`](comfyui/examples/). For setup details and node documentation, see the [ComfyUI README](comfyui/README.md).
 
 ## ⚙️ Configuration Details
 
