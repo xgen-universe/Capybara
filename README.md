@@ -36,7 +36,7 @@ The framework leverages advanced diffusion models and transformer architectures 
 ## 🔥 News
 
 * **[2026.02.20]** 🎨 Added [ComfyUI support](#-comfyui-support) with custom nodes for all task types (T2I, T2V, TI2I, TV2V).
-* **[2026.02.17]** 🚀 Initial release v0.1 of the Capybara inference framework supportting generation and instruction-based editing tasks (T2I, T2V, TI2I, TV2V).
+* **[2026.02.17]** 🚀 Initial release v0.1 of the Capybara inference framework supporting generation and instruction-based editing tasks (T2I, T2V, TI2I, TV2V).
 
 ## 📝 TODO List
 - [x] Add support for ComfyUI.
@@ -155,7 +155,7 @@ python inference.py \
 python inference.py \
     --pretrained_model_name_or_path ./ckpts \
     --media_path ./assets/examples/video1.mp4 \
-    --prompt "Replace the monkey with Ultraman. keep the Ultraman's motion matched the original running pose and motion of monkey." \
+    --prompt "Replace the monkey with Ultraman. Keep the Ultraman's motion matched the original running pose and motion of monkey." \
     --output_path ./results/test_single_output/tv2v \
     --num_inference_steps 50 \
     --num_frames 81 \
@@ -208,8 +208,8 @@ For editing tasks (TI2I / TV2V), prepare a CSV with `img_path`/`video_path` and 
 
 ```csv
 img_path,instruction
-img1.jpeg,insturction1.
-img2.jpeg,insturction2.
+img1.jpeg,instruction1.
+img2.jpeg,instruction2.
 ```
 
 > The path column holds relative paths to media files (images or videos) under the data root directory.
