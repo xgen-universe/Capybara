@@ -14,6 +14,11 @@
   
 </div>
 
+<p align="center">
+    🎉 Welcome to visit our <a href=https://lllydialee.github.io/Capybara-Project-Page>Project Page</a> | 
+💻 Visit our <a href="https://inappetent-acrophonically-alison.ngrok-free.dev/">Demo Website</a> to try our model!
+</p>
+
 **Capybara** is a unified visual creation model, i.e., a powerful visual generation and editing framework designed for high-quality visual synthesis and manipulation tasks.
 
 The framework leverages advanced diffusion models and transformer architectures to support versatile visual generation and editing capabilities with precise control over content, motion, and camera movements.
