@@ -5,7 +5,7 @@
 # <img src="./assets/misc/capybara.png" width="50" height="50" align="top" />CAPYBARA: A Unified Visual Creation Model
 
 <div align="center">
-  <img alt="Project Page" src="https://img.shields.io/badge/Project-Page-8A2BE2" height="22px" />
+  <a href=https://lllydialee.github.io/Capybara-Project-Page target="_blank"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-8A2BE2" height="22px" />
   <a href=https://huggingface.co/xgen-universe/Capybara target="_blank"><img src=https://img.shields.io/badge/%F0%9F%A4%97%20Models-d96902.svg height=22px></a>
   <a href=https://github.com/xgen-universe/Capybara target="_blank"><img src= https://img.shields.io/badge/Page-bb8a2e.svg?logo=github height=22px></a>
   <a href="https://inappetent-acrophonically-alison.ngrok-free.dev/" target="_blank"><img src=https://img.shields.io/badge/Gradio-Demo-orange?logo=gradio&logoColor=white height=22px></a>
